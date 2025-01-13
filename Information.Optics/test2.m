@@ -1,0 +1,22 @@
+clear
+lam=500e-9;
+a=1e-3;
+f=1;
+m=300;
+ym=5*0.61*lam*f/a;%取爱里光斑半径的5倍
+ys=linspace(-ym,ym,m);
+xs=ys;
+n=200;
+for i=1:m
+r=xs(i)^2+ys.^2;%相当于r的平方
+sinth=sqrt(r./(r+f^2));%角度
+fai=2*pi*a*sinth./lam;%fai=k*a*sinth
+hh=(2*besselj(1,fai)).^2./fai.^2;%贝塞尔函
+b(:,i)=hh.*5000;
+end
+subplot(1,2,1);
+image(xs,ys,b);
+colormap(gray(n));
+subplot(1,2,2);
+b(:,m/2);
+plot(ys,b(:,m/2));
